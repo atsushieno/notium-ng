@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package dev.atsushieno.notium
 
 import dev.atsushieno.ktmidi.MidiAccess
@@ -35,13 +37,13 @@ class RawMidiProcessor : PrimitiveProcessor {
     private val buffer = ByteArray(128)
 
      override fun midiEvent ( channel: Int, statusCode: Byte, data: Byte) {
-        buffer [0] = (statusCode + channel) as Byte
+        buffer [0] = (statusCode + channel).toByte()
          buffer [1] = data
          output.send (buffer, 0, 2, 0)
      }
 
     override fun midiEvent ( channel: Int, statusCode: Byte, data1 : Byte, data2: Byte) {
-        buffer [0] = (statusCode + channel) as Byte
+        buffer [0] = (statusCode + channel).toByte()
         buffer [1] = data1
         buffer [2] = data2
         output.send (buffer, 0, 3, 0)

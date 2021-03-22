@@ -1,23 +1,25 @@
+@file:Suppress("unused")
+
 package dev.atsushieno.notium
 
 class PrimitiveMmlProcessingContext : ControllerProcessingContext {
-    private val primitive_controller : PrimitiveProcessor
+    private val primitive : PrimitiveProcessor
 
     constructor (output: (String) -> Unit, errorOutput: ((String) -> Unit)?)
         : this (PrimitiveMmlProcessor (output, errorOutput))
 
     constructor ( primitive: PrimitiveMmlProcessor) {
-        primitive_controller = primitive
+        this.primitive = primitive
     }
 
     override val primitiveProcessor: PrimitiveProcessor
-        get() = primitive_controller
+        get() = primitive
 }
 
 class PrimitiveMmlProcessor(private val output: (String) -> Unit, debugOutput: ((String) -> Unit)? = null) :
     PrimitiveProcessor() {
 
-    private val debug_output: ((String) -> Unit)?
+    private val debugOutput: ((String) -> Unit)?
 
     override fun beginLoop(channel: Int) {
         output("[")
@@ -28,7 +30,7 @@ class PrimitiveMmlProcessor(private val output: (String) -> Unit, debugOutput: (
     }
 
     override fun debug(o: Any) {
-        (debug_output ?: output) (o?.toString() + "\n")
+        (debugOutput ?: output) (o.toString() + "\n")
     }
 
     override fun endLoop(channel: Int, repeats: Int) {
@@ -66,7 +68,7 @@ class PrimitiveMmlProcessor(private val output: (String) -> Unit, debugOutput: (
     }
 
     init {
-        this.debug_output = debugOutput ?: { s -> println(s) }
+        this.debugOutput = debugOutput ?: { s -> println(s) }
     }
 }
 

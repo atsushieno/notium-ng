@@ -1,11 +1,12 @@
+@file:Suppress("MemberVisibilityCanBePrivate", "unused")
+
 package dev.atsushieno.notium
 
 abstract class ControllerProcessingContext {
     abstract val primitiveProcessor: PrimitiveProcessor
 }
 
-class SimpleControllerProcessingContext : ControllerProcessingContext {
-    constructor (primitiveProcessor: PrimitiveProcessor)
+class SimpleControllerProcessingContext(primitiveProcessor: PrimitiveProcessor) : ControllerProcessingContext() {
 
     private val processor: PrimitiveProcessor = primitiveProcessor
 
@@ -76,9 +77,9 @@ class TrackController(private val context: ControllerProcessingContext) {
     fun debug(value: Any) = primitive.debug(value)
 
     @Macro("ASSERT_STEP")
-    fun assetStep(expected: Length, label: String) {
+    fun assertStep(expected: Length, label: String) {
         if (expected.toInt() != timelinePosition)
-            primitive.debug("WARNING: step assertion failed: $label (expected: $expected, actual: ${timelinePosition.toInt()})")
+            primitive.debug("WARNING: step assertion failed: $label (expected: $expected, actual: ${timelinePosition})")
     }
 
     // MIDI operators
@@ -319,11 +320,11 @@ class TrackController(private val context: ControllerProcessingContext) {
 
     fun beat(value: Byte, denominator: Int) {
         midiMeta(
-            0x58, value, when {
-                denominator == 2 -> 1
-                denominator == 4 -> 2
-                denominator == 8 -> 3
-                denominator == 16 -> 4
+            0x58, value, when (denominator) {
+                2 -> 1
+                4 -> 2
+                8 -> 3
+                16 -> 4
                 else -> denominator
             }.toByte(),
             0, 0
