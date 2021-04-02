@@ -8,7 +8,7 @@ import dev.atsushieno.ktmidi.MidiOutput
 
 
 class RawMidiProcessor : PrimitiveProcessor {
-    constructor () : this (MidiAccessManager.DEFAULT)
+    constructor () : this (MidiAccessManager.empty)
 
     constructor ( access: MidiAccess) : this (access.openOutputAsync (access.outputs.first ().id))
 

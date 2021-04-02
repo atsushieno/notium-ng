@@ -44,7 +44,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("dev.atsushieno:ktmidi-kotlinMultiplatform:0.1.4")
+                implementation("dev.atsushieno:ktmidi-kotlinMultiplatform:0.1.9")
             }
         }
         val commonTest by getting {
