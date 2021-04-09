@@ -1,9 +1,9 @@
 plugins {
-    kotlin("multiplatform") version "1.5.0-M1"
+    kotlin("multiplatform") version "1.4.32"
 }
 
 group = "dev.atsushieno"
-version = "0.1.0"
+version = "0.1.1"
 
 repositories {
     mavenLocal()
@@ -39,12 +39,11 @@ kotlin {
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
     */
-
     
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("dev.atsushieno:ktmidi-kotlinMultiplatform:0.1.9")
+                implementation("dev.atsushieno:ktmidi-kotlinMultiplatform:0.2.0")
             }
         }
         val commonTest by getting {
